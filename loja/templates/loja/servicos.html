@@ -1,0 +1,37 @@
+{% extends 'loja/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<section class="mb-5">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <h2>Nossos Serviços</h2>
+            <p class="text-muted">{{ servicos.count }} serviços disponíveis</p>
+        </div>
+        
+        {% for servico in servicos %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title text-white">{{ servico.nome }}</h3>
+                    <p class="card-text text-white">{{ servico.descricao }}</p>
+                    <p class="card-text text-white"><strong>A partir de R$ {{ servico.custo_base|intcomma }}</strong></p>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="https://wa.me/555195167835?text=Gostaria%20de%20saber%20mais%20sobre%20o%20serviço%20{{ servico.nome|urlencode }}" 
+                       class="btn btn-success w-100">
+                        <i class="bi bi-whatsapp"></i> Solicitar Orçamento
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                Nenhum serviço disponível no momento.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

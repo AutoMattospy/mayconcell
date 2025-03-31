@@ -1,0 +1,79 @@
+{% extends 'loja/base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block content %}
+<section class="mb-5">
+    <!-- Banner Mayconcell -->
+    <div class="row">
+        <div class="col-12 px-0 mb-4">
+            <div class="position-relative">
+                <img src="{% static 'images/banner-mayconcell.jpg' %}" 
+                     class="img-fluid w-100"
+                     style="max-height: 500px; object-fit: cover;">
+                
+                <div class="position-absolute top-0 start-0 w-100 h-100 banner-overlay d-flex align-items-center">
+                    <div class="container">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de Produtos em Destaque -->
+    <section class="mb-5">
+        <h2 class="text-center mb-4 text-white">Produtos em Destaque</h2>
+        <div class="row">
+            {% for produto in produtos %}
+            <div class="col-md-3 mb-4">
+                <div class="card product-card h-100">
+                    {% if produto.imagem_principal %}
+                    <img src="{{ produto.imagem_principal.url }}" class="card-img-top p-3" alt="{{ produto.nome }}">
+                    {% else %}
+                    <div class="card-img-top p-3 bg-dark d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <span class="text-muted">Sem imagem</span>
+                    </div>
+                    {% endif %}
+                    <div class="card-body bg-dark">
+                        <h5 class="card-title text-white">{{ produto.nome }}</h5>
+                        <p class="card-text text-white"><strong>R$ {{ produto.valor|intcomma }}</strong></p>
+                        <a href="{% url 'detalhe_produto' produto.id %}" class="btn btn-success w-100">Ver Detalhes</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-3">
+            <a href="{% url 'produtos' %}" class="btn btn-success">Ver Todos os Produtos</a>
+        </div>
+    </section>
+
+    <!-- Seção de Serviços -->
+    <section class="mb-5">
+        <h2 class="text-center mb-4 text-white">Nossos Serviços</h2>
+        <div class="row">
+            {% for servico in servicos %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 bg-dark">
+                    <div class="card-body">
+                        <h3 class="card-title text-white">{{ servico.nome }}</h3>
+                        <p class="card-text text-white">{{ servico.descricao|truncatewords:20 }}</p>
+                        <p class="card-text text-white"><strong>A partir de R$ {{ servico.custo_base|intcomma }}</strong></p>
+                    </div>
+                    <div class="card-footer bg-transparent border-top border-secondary">
+                        <a href="https://wa.me/555195167835?text=Gostaria%20de%20saber%20mais%20sobre%20o%20serviço%20{{ servico.nome|urlencode }}" 
+                           class="btn btn-success w-100">
+                            <i class="bi bi-whatsapp"></i> Solicitar Orçamento
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-3">
+            <a href="{% url 'servicos' %}" class="btn btn-success">Ver Todos os Serviços</a>
+        </div>
+    </section>
+</section>
+{% endblock %}

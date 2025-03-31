@@ -1,0 +1,61 @@
+{% extends 'loja/base.html' %}
+{% load humanize %}
+
+{% block content %}
+<section class="mb-5">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Filtros por categoria -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Categorias</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'produtos' %}" class="list-group-item list-group-item-action {% if not categoria_selecionada %}list-group-item-success{% endif %}">
+                        Todas as Categorias
+                    </a>
+                    {% for categoria in categorias %}
+                    <a href="{% url 'produtos' %}?categoria={{ categoria.id }}" 
+                       class="list-group-item list-group-item-action {% if categoria_selecionada == categoria.id %}list-group-item-success{% endif %}">
+                        {{ categoria.nome }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h2>Nossos Produtos</h2>
+                    <p class="text-muted text-white">{{ produtos.count }} produtos encontrados</p>
+                </div>
+                
+                {% for produto in produtos %}
+                <div class="col-md-4 mb-4">
+                    <div class="card product-card h-100">
+                        {% if produto.imagem_principal %}
+                        <img src="{{ produto.imagem_principal.url }}" class="card-img-top p-3" alt="{{ produto.nome }}" style="height: 200px; object-fit: contain;">
+                        {% else %}
+                        <div class="card-img-top p-3 bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-muted">Sem imagem</span>
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title text-white">{{ produto.nome }}</h5>
+                            <p class="card-text text-white">R$ {{ produto.valor|intcomma }}</p>
+                            <a href="{% url 'detalhe_produto' produto.id %}" class="btn btn-success w-100">Ver Detalhes</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-success">
+                        Nenhum produto encontrado nesta categoria.
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

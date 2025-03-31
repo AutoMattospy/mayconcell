@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_name }} - {{ site_description }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --card-bg: #1e1e1e;
+            --text-light: #e0e0e0;
+            --text-muted: #9e9e9e;
+            --primary-green: #00AA13;
+            --hover-green: #008c10;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+        
+        .bg-primary {
+            background-color: var(--darker-bg) !important;
+        }
+        
+        .bg-secondary {
+            background-color: var(--primary-green) !important;
+        }
+        
+        .text-primary {
+            color: var(--primary-green) !important;
+        }
+        
+        .text-secondary {
+            color: var(--primary-green) !important;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 170, 19, 0.1);
+        }
+        
+        .list-group-item {
+            background-color: var(--card-bg);
+            color: var(--text-light);
+            border-color: #333;
+        }
+        
+        .list-group-item-success {
+            background-color: rgba(0, 170, 19, 0.2);
+            color: var(--primary-green);
+        }
+        
+        .btn-success {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+        
+        .btn-success:hover {
+            background-color: var(--hover-green);
+            border-color: var(--hover-green);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-green);
+            color: white;
+        }
+        
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+        
+        .alert {
+            background-color: var(--card-bg);
+            border-color: #333;
+        }
+        
+        .alert-success {
+            background-color: rgba(0, 170, 19, 0.1);
+            border-color: var(--primary-green);
+            color: var(--text-light);
+        }
+        
+        .product-card img {
+            height: 200px;
+            object-fit: contain;
+        }
+        
+        .banner-overlay {
+            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,170,19,0.3));
+        }
+    </style>
+</head>
+<body>
+    {% include 'loja/partials/_header.html' %}
+    
+    <main class="container mt-4">
+        {% block content %}{% endblock %}
+    </main>
+    
+    {% include 'loja/partials/_footer.html' %}
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
