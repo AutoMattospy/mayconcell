@@ -56,6 +56,9 @@
             {% for servico in servicos %}
             <div class="col-md-4 mb-4">
                 <div class="card h-100 bg-dark">
+                    {% if servico.imagem_principal %}
+                    <img src="{{ servico.imagem_principal.url }}" alt="{{ servico.nome }}" class="card-img-top p-3" style="max-width: 100%; height: 200px; object-fit: contain;">
+                    {% endif %}
                     <div class="card-body">
                         <h3 class="card-title text-white">{{ servico.nome }}</h3>
                         <p class="card-text text-white">{{ servico.descricao|truncatewords:20 }}</p>

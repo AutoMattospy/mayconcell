@@ -1,13 +1,25 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Categoria, Produto, Servico, ImagemProduto
+from .models import Categoria, Produto, Servico, ImagemProduto, ImagemServico
 
 class ImagemProdutoInline(admin.TabularInline):
     model = ImagemProduto
     extra = 3
     fields = ('imagem', 'imagem_preview', 'ordem')
     readonly_fields = ('imagem_preview',)
-    
+
+    def imagem_preview(self, obj):
+        if obj.imagem:
+            return format_html('<img src="{}" style="max-height: 100px;"/>', obj.imagem.url)
+        return "-"
+    imagem_preview.short_description = 'Pré-visualização'
+
+class ImagemServicoInline(admin.TabularInline):
+    model = ImagemServico
+    extra = 3
+    fields = ('imagem', 'imagem_preview', 'ordem')
+    readonly_fields = ('imagem_preview',)
+
     def imagem_preview(self, obj):
         if obj.imagem:
             return format_html('<img src="{}" style="max-height: 100px;"/>', obj.imagem.url)
@@ -19,7 +31,7 @@ class ProdutoAdmin(admin.ModelAdmin):
     list_filter = ('categoria', 'disponivel')
     search_fields = ('nome', 'descricao')
     inlines = [ImagemProdutoInline]
-    
+
     def admin_imagem_preview(self, obj):
         if obj.imagem_principal:
             return format_html('<img src="{}" style="max-height: 50px;"/>', obj.imagem_principal.url)
@@ -27,8 +39,15 @@ class ProdutoAdmin(admin.ModelAdmin):
     admin_imagem_preview.short_description = 'Imagem Principal'
 
 class ServicoAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'custo_base', 'disponivel')
+    list_display = ('nome', 'custo_base', 'disponivel', 'admin_imagem_preview')
     search_fields = ('nome', 'descricao')
+    inlines = [ImagemServicoInline]
+
+    def admin_imagem_preview(self, obj):
+        if obj.imagem_principal:
+            return format_html('<img src="{}" style="max-height: 50px;"/>', obj.imagem_principal.url)
+        return "Sem imagem"
+    admin_imagem_preview.short_description = 'Imagem Principal'
 
 admin.site.site_header = "Mayconcell - Administração"
 admin.site.site_title = "Mayconcell"
